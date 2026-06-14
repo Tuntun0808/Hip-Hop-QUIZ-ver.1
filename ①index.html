@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIPHOP QUIZ</title>
+
+<style>
+body{
+    font-family: sans-serif;
+    color:white;
+    text-align:center;
+    margin:0;
+    padding:20px;
+
+    background-image:url("wutan.png");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:rgba(0,0,0,0.8);
+    padding:20px;
+    border-radius:15px;
+}
+
+h1{
+    color:#ffcc00;
+}
+
+.question{
+    margin:25px 0;
+    text-align:left;
+}
+
+button{
+    width:100%;
+    margin:5px 0;
+    padding:12px;
+    font-size:18px;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+}
+
+button:hover{
+    opacity:0.8;
+}
+
+#nextBtn{
+    background:#ffcc00;
+    font-weight:bold;
+}
+
+#result{
+    font-size:30px;
+    margin-top:20px;
+    color:#00ff99;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🎤 HIPHOP QUIZ 🎤</h1>
+
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<button id="nextBtn" onclick="nextQuestion()" style="display:none;">
+次の問題
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"第一問 RAPSTAR2025優勝者は誰？",
+answers:[
+"MASATO HAYASHI",
+"Pxrge Trxxxper",
+"Tee Shyne",
+"VERRY SMoL"
+],
+correct:1
+},
+
+{
+question:"第二問 ラッパーZORNの本名は？",
+answers:[
+"杉山 雄基",
+"武田 嘉穂",
+"川上 国彦",
+"岩瀬 雄哉"
+],
+correct:0
+},
+
+{
+question:"第三問 RHYMESTERのDJは誰？",
+answers:[
+"DJ KANJI",
+"DJ TATSUKI",
+"DJ OZMA",
+"DJ JIN"
+],
+correct:3
+},
+
+{
+question:"第四問 ウータンクランのメンバーではないのは誰？",
+answers:[
+"RZA",
+"SZA",
+"GZA",
+"ODB"
+],
+correct:1
+},
+
+{
+question:"第五問 実在するラッパーは誰？",
+answers:[
+"REDMAN",
+"GREENMAN",
+"BLACKMAN",
+"BLUEMAN"
+],
+correct:0
+},
+
+{
+question:"第六問 「なめだるま」正しい表記はどれ？",
+answers:[
+"滑達磨",
+"舐達磨",
+"舐達摩",
+"舐達麻"
+],
+correct:3
+},
+
+{
+question:"第七問 ニトロの曲はどれ？",
+answers:[
+"ヤッホー",
+"オレはオレ",
+"たてめえん",
+"ちょっとだけバカ"
+],
+correct:2
+},
+
+{
+question:"第八問 「ヤバスギルスキル」2026年現在Partいくつ？",
+answers:[
+"Part.8",
+"Part.12",
+"Part.20",
+"Part.24"
+],
+correct:1
+},
+
+{
+question:"第九問 LL Cool Jとは何の略？",
+answers:[
+"Little Love Cool John",
+"Ladies Love Cool James",
+"Long Love Cool Johnny",
+"Love Love Cool Jam"
+],
+correct:1
+},
+
+{
+question:"第十問 「チーム友達 Remix」で存在しないのは？",
+answers:[
+"沖縄 Remix",
+"青森 Remix",
+"九州 Remix",
+"東海 Remix"
+],
+correct:0
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function showQuestion(){
+
+const q = quiz[currentQuestion];
+
+document.getElementById("question").innerText = q.question;
+
+const answersDiv = document.getElementById("answers");
+answersDiv.innerHTML = "";
+
+q.answers.forEach((answer,index)=>{
+
+const btn = document.createElement("button");
+
+btn.innerText = answer;
+
+btn.onclick = () => checkAnswer(index);
+
+answersDiv.appendChild(btn);
+
+});
+
+}
+
+function checkAnswer(index){
+
+const q = quiz[currentQuestion];
+
+if(index === q.correct){
+
+score++;
+
+alert("正解！");
+}
+else{
+
+alert("不正解！ 正解は「" +
+q.answers[q.correct] + "」");
+}
+
+document.getElementById("nextBtn").style.display="block";
+
+const buttons =
+document.querySelectorAll("#answers button");
+
+buttons.forEach(btn=>{
+btn.disabled = true;
+});
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+document.getElementById("nextBtn").style.display="none";
+
+if(currentQuestion < quiz.length){
+
+showQuestion();
+
+}else{
+
+document.getElementById("question").style.display="none";
+document.getElementById("answers").style.display="none";
+document.getElementById("nextBtn").style.display="none";
+
+document.getElementById("result").innerHTML =
+"あなたの正解数は <br><br>" +
+score + " / 10 問中 🎤";
+}
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
