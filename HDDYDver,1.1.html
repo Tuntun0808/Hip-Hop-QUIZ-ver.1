@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H.D.D.Y.D</title>
+</head>
+
+<body>
+
+<div id="startScreen">
+
+<h1>🎤 H.D.D.Y.D 🎤</h1>
+<h2>~ How Deep Do You Dig? ~</h2>
+
+<button onclick="startQuiz()">START</button>
+</div>
+
+<div id="quizScreen" style="display:none;">
+
+<h3 id="questionNumber"></h3>
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<p id="result"></p>
+
+<button id="nextBtn"
+style="display:none;"
+onclick="nextQuestion()">
+次の問題
+</button>
+
+<button id="backBtn"
+style="display:none;"
+onclick="goHome()">
+戻る
+</button>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"RAPSTAR 2025の優勝者は誰？",
+answers:[
+"MASATO HAYASHI",
+"Pxrge Trxxxper",
+"Tee Shyne",
+"VERRY SMoL"
+],
+correct:1
+},
+
+{
+question:"ラッパーZORNの本名は？",
+answers:[
+"杉山 雄基",
+"武田 嘉穂",
+"川上 国彦",
+"岩瀬 雄哉"
+],
+correct:0
+},
+
+{
+question:"RHYMESTERのDJは誰？",
+
+answers:[
+"DJ KANJI",
+"DJ TATSUKI",
+"DJ OZMA",
+"DJ JIN"
+],
+
+correct:3
+},
+
+{
+question:"Wu-Tang Clanのメンバーではないのは誰？",
+
+answers:[
+"RZA",
+"SZA",
+"GZA",
+"ODB"
+],
+
+correct:1
+},
+
+{
+question:"実在するラッパーは誰？",
+
+answers:[
+"REDMAN",
+"GREENMAN",
+"BLACKMAN",
+"BLUEMAN"
+],
+
+correct:0
+},
+
+{
+question:"「舐達麻」の正しい表記はどれ？",
+
+answers:[
+"滑達磨",
+"舐達磨",
+"舐達摩",
+"舐達麻"
+],
+
+correct:3
+},
+
+{
+question:"NITRO MICROPHONE UNDERGROUNDの曲はどれ？",
+
+answers:[
+"ヤッホー",
+"オレはオレ",
+"たてめえん",
+"ちょっとだけバカ"
+],
+
+correct:2
+},
+
+{
+question:"ラッパ我リヤの名曲「ヤバスギルスキル」は、2026年現在Partいくつまである？",
+
+answers:[
+"Part.8",
+"Part.12",
+"Part.20",
+"Part.24"
+],
+
+correct:1
+},
+
+{
+question:"LL Cool Jとは何の略？",
+
+answers:[
+"Little Love Cool John",
+"Ladies Love Cool James",
+"Long Love Cool Johnny",
+"Love Love Cool Jam"
+],
+
+correct:1
+},
+
+{
+question:"「チーム友達 Remix」で実在しないのはどれ？",
+
+answers:[
+"沖縄 Remix",
+"青森 Remix",
+"九州 Remix",
+"東海 Remix"
+],
+
+correct:0
+}
+
+];
+
+
+let currentQuestion = 0;
+let score = 0;
+function startQuiz(){
+
+document.getElementById("startScreen").style.display =
+"none";
+
+document.getElementById("quizScreen").style.display =
+"block";
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+const q = quiz[currentQuestion];
+
+document.getElementById("questionNumber").innerHTML =
+"Question " + (currentQuestion + 1) + " / 10";
+
+document.getElementById("question").innerHTML =
+q.question;
+
+const answersDiv =
+document.getElementById("answers");
+
+answersDiv.innerHTML = "";
+
+q.answers.forEach((answer,index)=>{
+
+const btn =
+document.createElement("button");
+
+btn.innerHTML = answer;
+
+btn.onclick = function(){
+
+checkAnswer(index);
+
+};
+
+answersDiv.appendChild(btn);
+
+});
+
+}
+
+function checkAnswer(index){
+
+const q = quiz[currentQuestion];
+
+if(index === q.correct){
+
+score++;
+
+document.getElementById("result").innerHTML =
+"🙆‍♂️Correct!🙆‍♀️<br>Respect.";
+
+}else{
+
+document.getElementById("result").innerHTML =
+"🙅‍♂️Wrong!🙅‍♀️<br>Go Dig!";
+
+}
+
+document.getElementById("nextBtn").style.display =
+"block";
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+document.getElementById("result").innerHTML = "";
+
+document.getElementById("nextBtn").style.display =
+"none";
+
+if(currentQuestion < quiz.length){
+
+showQuestion();
+
+}else{
+
+document.getElementById("question").innerHTML =
+"RESULT";
+
+let rank = "";
+
+if(score === 10){
+
+rank = "👑🐐You Are G.O.A.T🐐👑";
+
+}else if(score >= 8){
+
+rank = "🎤Respect🎤";
+
+}else if(score >= 6){
+
+rank = "🫵🏻Keep Diggin'🫵🏻";
+
+}else if(score >= 4){
+
+rank = "😏Not Bad.😏";
+
+}else if(score >= 2){
+
+rank = "😫Come on,Man.😫";
+
+}else{
+
+rank = "🤦‍♂️Bro. what Happened?🤦‍♀️";
+
+}
+
+
+document.getElementById("answers").innerHTML =
+"正解は " + score + " 問！<br><br>" + rank;
+
+document.getElementById("backBtn").style.display =
+"block";
+}
+
+}
+function goHome(){
+
+document.getElementById("quizScreen").style.display =
+"none";
+
+document.getElementById("startScreen").style.display =
+"block";
+
+currentQuestion = 0;
+
+score = 0;
+
+}
+
+</script>
+
+</body>
+</html>
