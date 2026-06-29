@@ -4,6 +4,176 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>H.D.D.Y.D</title>
+<style>
+
+button{
+
+padding:15px 30px;
+
+margin:10px;
+
+font-size:18px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+body{
+
+background:#0a0a0a;
+
+color:white;
+
+text-align:center;
+
+font-family:Arial;
+
+}
+
+button{
+
+padding:15px 40px;
+
+margin:10px;
+
+font-size:20px;
+
+background:#111;
+
+color:white;
+
+border:2px solid #a020f0;
+
+border-radius:15px;
+
+cursor:pointer;
+
+}
+
+#quizScreen{
+
+background:#151515;
+
+padding:30px;
+
+border-radius:20px;
+
+margin:20px;
+
+}
+
+h1{
+
+font-size:50px;
+
+letter-spacing:5px;
+
+}
+
+#quizScreen{
+
+background:#151515;
+
+padding:30px;
+
+border-radius:20px;
+
+margin:20px auto;
+
+max-width:500px;
+
+}
+
+#question{
+
+font-size:24px;
+
+margin:25px 0;
+
+}
+
+#result{
+
+font-size:30px;
+
+font-weight:bold;
+
+margin:20px;
+
+}
+
+
+.correct{
+
+color:deepskyblue;
+
+}
+
+
+.wrong{
+
+color:red;
+
+}
+
+#answers{
+
+margin:30px;
+
+}
+
+
+#answers.result{
+
+font-size:35px;
+
+font-weight:bold;
+
+}
+
+.rank{
+
+white-space:nowrap;
+
+}
+
+#startScreen button{
+
+display:block;
+
+margin:15px auto;
+
+}
+
+#settingScreen{
+
+background:#151515;
+
+padding:30px;
+
+border-radius:20px;
+
+margin:20px auto;
+
+max-width:500px;
+
+}
+
+#settingMessage{
+
+font-size:25px;
+
+font-weight:bold;
+
+margin:25px;
+
+color:deepskyblue;
+
+}
+
+</style>
 </head>
 
 <body>
@@ -13,12 +183,66 @@
 <h1>🎤 H.D.D.Y.D 🎤</h1>
 <h2>~ How Deep Do You Dig? ~</h2>
 
-<button onclick="startQuiz()">START</button>
+<button onclick="showMode()">START</button>
+
+<button onclick="showSettings()">
+⚙️ SETTINGS
+</button>
+
+</div>
+
+<div id="modeScreen" style="display:none;">
+
+<h2>MODE SELECT</h2>
+
+<div class="modeBox"></div>
+
+<button onclick="startJQuiz()">
+J-HIPHOP MODE
+</button>
+
+<button onclick="startUSQuiz()">
+US HIPHOP MODE
+</button>
+
+<button onclick="startRandomQuiz()">
+RANDOM MODE
+</button>
+
+</div>
+
+<div id="settingScreen" style="display:none;">
+
+<h2>⚙️ SETTINGS</h2>
+
+<h3>TIME LIMIT</h3>
+
+<button onclick="setTime(10)">
+10 SEC
+</button>
+
+<button onclick="setTime(5)">
+5 SEC
+</button>
+
+<button onclick="setTime(3)">
+3 SEC
+</button>
+
+<p id="settingMessage">
+⏱ TIME LIMIT : 5 SEC
+</p>
+
+<button onclick="backStart()">
+戻る
+</button>
+
 </div>
 
 <div id="quizScreen" style="display:none;">
 
 <h3 id="questionNumber"></h3>
+<h3 id="timer"></h3>
 <h2 id="question"></h2>
 
 <div id="answers"></div>
@@ -39,144 +263,99 @@ onclick="goHome()">
 
 </div>
 
+<script src="jhiphop.js"></script>
+<script src="ushiphop.js"></script>
+
 <script>
 
-const quiz = [
 
-{
-question:"RAPSTAR 2025の優勝者は誰？",
-answers:[
-"MASATO HAYASHI",
-"Pxrge Trxxxper",
-"Tee Shyne",
-"VERRY SMoL"
-],
-correct:1
-},
-
-{
-question:"ラッパーZORNの本名は？",
-answers:[
-"杉山 雄基",
-"武田 嘉穂",
-"川上 国彦",
-"岩瀬 雄哉"
-],
-correct:0
-},
-
-{
-question:"RHYMESTERのDJは誰？",
-
-answers:[
-"DJ KANJI",
-"DJ TATSUKI",
-"DJ OZMA",
-"DJ JIN"
-],
-
-correct:3
-},
-
-{
-question:"Wu-Tang Clanのメンバーではないのは誰？",
-
-answers:[
-"RZA",
-"SZA",
-"GZA",
-"ODB"
-],
-
-correct:1
-},
-
-{
-question:"実在するラッパーは誰？",
-
-answers:[
-"REDMAN",
-"GREENMAN",
-"BLACKMAN",
-"BLUEMAN"
-],
-
-correct:0
-},
-
-{
-question:"「舐達麻」の正しい表記はどれ？",
-
-answers:[
-"滑達磨",
-"舐達磨",
-"舐達摩",
-"舐達麻"
-],
-
-correct:3
-},
-
-{
-question:"NITRO MICROPHONE UNDERGROUNDの曲はどれ？",
-
-answers:[
-"ヤッホー",
-"オレはオレ",
-"たてめえん",
-"ちょっとだけバカ"
-],
-
-correct:2
-},
-
-{
-question:"ラッパ我リヤの名曲「ヤバスギルスキル」は、2026年現在Partいくつまである？",
-
-answers:[
-"Part.8",
-"Part.12",
-"Part.20",
-"Part.24"
-],
-
-correct:1
-},
-
-{
-question:"LL Cool Jとは何の略？",
-
-answers:[
-"Little Love Cool John",
-"Ladies Love Cool James",
-"Long Love Cool Johnny",
-"Love Love Cool Jam"
-],
-
-correct:1
-},
-
-{
-question:"「チーム友達 Remix」で実在しないのはどれ？",
-
-answers:[
-"沖縄 Remix",
-"青森 Remix",
-"九州 Remix",
-"東海 Remix"
-],
-
-correct:0
-}
-
-];
 
 
 let currentQuestion = 0;
 let score = 0;
-function startQuiz(){
+let timeLeft = 5;
+let timeLimit = 5;
+let timer;
+
+let quiz = [];
+
+function showMode(){
 
 document.getElementById("startScreen").style.display =
+"none";
+
+document.getElementById("modeScreen").style.display =
+"block";
+
+}
+
+function showSettings(){
+
+document.getElementById("startScreen").style.display =
+"none";
+
+document.getElementById("settingScreen").style.display =
+"block";
+
+}
+
+function setTime(seconds){
+
+timeLimit = seconds;
+
+document.getElementById("settingMessage").innerHTML =
+"⏱ TIME LIMIT : " + seconds + " SEC";
+
+}
+
+function backStart(){
+
+document.getElementById("settingScreen").style.display =
+"none";
+
+document.getElementById("startScreen").style.display =
+"block";
+
+}
+
+function startJQuiz(){
+
+quiz = [...jQuiz];
+
+startQuiz();
+
+}
+
+function startUSQuiz(){
+
+quiz = [...usQuiz];
+
+startQuiz();
+
+}
+
+function startRandomQuiz(){
+
+quiz = [...jQuiz, ...usQuiz];
+
+startQuiz();
+
+}
+
+
+function startQuiz(){
+
+let quizData = [...quiz];
+
+quizData.sort(() => Math.random() - 0.5);
+
+quiz = quizData.slice(0,10);
+
+
+document.getElementById("startScreen").style.display =
+"none";
+
+document.getElementById("modeScreen").style.display =
 "none";
 
 document.getElementById("quizScreen").style.display =
@@ -190,8 +369,10 @@ function showQuestion(){
 
 const q = quiz[currentQuestion];
 
+startTimer();
+
 document.getElementById("questionNumber").innerHTML =
-"Question " + (currentQuestion + 1) + " / 10";
+"Question " + (currentQuestion + 1) + " / " + quiz.length;
 
 document.getElementById("question").innerHTML =
 q.question;
@@ -205,6 +386,9 @@ q.answers.forEach((answer,index)=>{
 
 const btn =
 document.createElement("button");
+
+
+btn.className = "answerBtn";
 
 btn.innerHTML = answer;
 
@@ -222,6 +406,8 @@ answersDiv.appendChild(btn);
 
 function checkAnswer(index){
 
+clearInterval(timer);
+
 const q = quiz[currentQuestion];
 
 if(index === q.correct){
@@ -231,12 +417,24 @@ score++;
 document.getElementById("result").innerHTML =
 "🙆‍♂️Correct!🙆‍♀️<br>Respect.";
 
+document.getElementById("result").className =
+"correct";
+
 }else{
 
 document.getElementById("result").innerHTML =
 "🙅‍♂️Wrong!🙅‍♀️<br>Go Dig!";
 
+document.getElementById("result").className =
+"wrong";
+
 }
+
+document.querySelectorAll(".answerBtn").forEach(function(btn){
+
+btn.disabled = true;
+
+});
 
 document.getElementById("nextBtn").style.display =
 "block";
@@ -247,10 +445,14 @@ function nextQuestion(){
 
 currentQuestion++;
 
+document.getElementById("timer").innerHTML = "";
+
 document.getElementById("result").innerHTML = "";
 
 document.getElementById("nextBtn").style.display =
 "none";
+
+document.getElementById("questionNumber").innerHTML = "";
 
 if(currentQuestion < quiz.length){
 
@@ -258,8 +460,7 @@ showQuestion();
 
 }else{
 
-document.getElementById("question").innerHTML =
-"RESULT";
+document.getElementById("question").innerHTML = "";
 
 let rank = "";
 
@@ -289,22 +490,95 @@ rank = "🤦‍♂️Bro. what Happened?🤦‍♀️";
 
 }
 
+document.getElementById("answers").className =
+"result";
 
 document.getElementById("answers").innerHTML =
-"正解は " + score + " 問！<br><br>" + rank;
+"RESULT";
+
+
+setTimeout(function(){
+
+document.getElementById("answers").innerHTML +=
+"<br><br>SCORE";
+
+},1000);
+
+
+setTimeout(function(){
+
+document.getElementById("answers").innerHTML +=
+"<br><br>" + score + " / " + quiz.length;
+
+},2000);
+
+
+setTimeout(function(){
+
+document.getElementById("answers").innerHTML +=
+"<br><br><span class='rank'>" + rank + "</span>";
 
 document.getElementById("backBtn").style.display =
 "block";
+
+},3000);
+
 }
 
 }
+
+function startTimer(){
+
+timeLeft = timeLimit;
+
+document.getElementById("timer").innerHTML =
+"⏱ " + timeLeft + " sec";
+
+timer = setInterval(function(){
+
+timeLeft--;
+
+document.getElementById("timer").innerHTML =
+"⏳ " + timeLeft + " sec"
+
+
+if(timeLeft <= 0){
+
+clearInterval(timer);
+
+document.getElementById("result").innerHTML =
+"🙅‍♂️Time Up!🙅‍♀️<br>Go Dig!";
+
+document.querySelectorAll(".answerBtn").forEach(function(btn){
+
+btn.disabled = true;
+
+});
+
+setTimeout(function(){
+
+nextQuestion();
+
+},1000);
+
+}
+
+},1000);
+
+}
+
 function goHome(){
+
+clearInterval(timer);
 
 document.getElementById("quizScreen").style.display =
 "none";
 
 document.getElementById("startScreen").style.display =
 "block";
+
+document.getElementById("backBtn").style.display =
+"none";
 
 currentQuestion = 0;
 
